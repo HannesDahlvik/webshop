@@ -8,7 +8,7 @@ import Navbar from '../components/public/Navbar'
 
 const Public: React.FC = ({ children }) => {
     return (
-        <Box h="100vh">
+        <Box h="100%">
             <Navbar />
 
             <main>{children}</main>

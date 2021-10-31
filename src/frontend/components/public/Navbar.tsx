@@ -97,7 +97,7 @@ const Navbar: React.FC = () => {
                     m="0 auto"
                     alignItems="center"
                 >
-                    <Box>
+                    <Box mr="4">
                         <Text fontSize="xl" fontWeight="bold">
                             <Link href="/">Webshop</Link>
                         </Text>
@@ -137,7 +137,7 @@ const Navbar: React.FC = () => {
                     <Flex ml="auto">
                         <HStack spacing="24px">
                             {user?.role === 'admin' ? (
-                                <Link href="/admin">
+                                <Link passHref href="/admin/dashboard">
                                     <Button colorScheme="green">Admin</Button>
                                 </Link>
                             ) : (
@@ -159,7 +159,9 @@ const Navbar: React.FC = () => {
                                         <MenuList zIndex="999">
                                             <MenuItem
                                                 onClick={() =>
-                                                    router.push('/account')
+                                                    router.push(
+                                                        '/account/details'
+                                                    )
                                                 }
                                             >
                                                 Account

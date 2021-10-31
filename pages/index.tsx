@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Head from 'next/head'
 import { Products } from '../src/frontend/config/types'
 
 // Logic
@@ -50,68 +49,60 @@ const Home: React.FC = () => {
     }, [])
 
     return (
-        <>
-            <Head>
-                <title>Webshop</title>
-                <meta name="description" content="Webshop" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
+        <Public>
+            <Swiper
+                loop
+                autoplay
+                navigation
+                pagination={{
+                    clickable: true
+                }}
+            >
+                <SwiperSlide>
+                    <Image
+                        w="100%"
+                        src="https://dummyimage.com/1600x600.png"
+                        alt=""
+                    />
+                </SwiperSlide>
 
-            <Public>
-                <Swiper
-                    loop
-                    autoplay
-                    navigation
-                    pagination={{
-                        clickable: true
-                    }}
+                <SwiperSlide>
+                    <Image
+                        w="100%"
+                        src="https://dummyimage.com/1600x600.png"
+                        alt=""
+                    />
+                </SwiperSlide>
+
+                <SwiperSlide>
+                    <Image
+                        w="100%"
+                        src="https://dummyimage.com/1600x600.png"
+                        alt=""
+                    />
+                </SwiperSlide>
+            </Swiper>
+
+            {data.length > 0 ? (
+                <Grid
+                    w={wrapperSize}
+                    templateColumns="repeat(4, 1fr)"
+                    gridGap="4"
+                    m="0 auto"
+                    p="32px 0"
                 >
-                    <SwiperSlide>
-                        <Image
-                            w="100%"
-                            src="https://dummyimage.com/1600x600.png"
-                            alt=""
-                        />
-                    </SwiperSlide>
-
-                    <SwiperSlide>
-                        <Image
-                            w="100%"
-                            src="https://dummyimage.com/1600x600.png"
-                            alt=""
-                        />
-                    </SwiperSlide>
-
-                    <SwiperSlide>
-                        <Image
-                            w="100%"
-                            src="https://dummyimage.com/1600x600.png"
-                            alt=""
-                        />
-                    </SwiperSlide>
-                </Swiper>
-
-                {data.length > 0 ? (
-                    <Grid
-                        w={wrapperSize}
-                        templateColumns="repeat(4, 1fr)"
-                        gridGap="4"
-                        m="0 auto"
-                        p="32px 0"
-                    >
-                        {data.map((row: Products, i: number) => (
-                            <ProductCard {...row} key={i} />
-                        ))}
-                    </Grid>
-                ) : noData ? (
-                    <Flex justify="center" align="center" pt="10">
-                        <Heading>No products</Heading>
-                    </Flex>
-                ) : (
-                    <Loader />
-                )}
-            </Public>
-        </>
+                    {data.map((row: Products, i: number) => (
+                        <ProductCard {...row} key={i} />
+                    ))}
+                </Grid>
+            ) : noData ? (
+                <Flex justify="center" align="center" pt="10">
+                    <Heading>No products</Heading>
+                </Flex>
+            ) : (
+                <Loader />
+            )}
+        </Public>
     )
 }
 

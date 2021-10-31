@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Head from 'next/head'
 
 // Logic
 import core from '../logic/core'
@@ -17,10 +18,15 @@ import useErrorHandler from '../utils/useErrorHandler'
 const Global: React.FC = ({ children }) => {
     const ErrorHandler = useErrorHandler()
 
+    const [title, setTitle] = useState('Webshop')
     const [render, setRender] = useState(false)
 
     useEvent(core.events.logout, () => {
         auth.logout()
+    })
+
+    useEvent(core.events.changeTitle, (payload) => {
+        setTitle(payload)
     })
 
     useEffect(() => {
@@ -72,7 +78,17 @@ const Global: React.FC = ({ children }) => {
 
     if (!render) return <Loader />
 
-    return <>{children}</>
+    return (
+        <>
+            <Head>
+                <title>{title}</title>
+                <meta name="description" content="Webshop" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+
+            {children}
+        </>
+    )
 }
 
 export default Global
