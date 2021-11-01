@@ -4,20 +4,21 @@ import { User } from '../config/types'
 /**
  * Auth functions
  */
-export const signOut = () => {
+const signOut = () => {
     core.state.user.set(null)
+    core.state.token.set('')
     localStorage.removeItem('token')
 }
 
 /**
  * Utils functions
  */
-export const setToken = (token: string) => {
+const setToken = (token: string) => {
     core.state.token.set(token)
     localStorage.setItem('token', token)
 }
 
-export const setUser = (decoded: User) => {
+const setUser = (decoded: User) => {
     core.state.user.set(decoded)
 }
 

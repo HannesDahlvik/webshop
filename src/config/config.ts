@@ -1,5 +1,5 @@
 const config = {
-    jwtSecret: 'epicgaminglol'
+    jwtSecret: process.env.JWT_SECRET
 }
 
 export default config
