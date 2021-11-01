@@ -37,6 +37,8 @@ const Home: React.FC = () => {
     const [noData, setNoData] = useState(false)
 
     useEffect(() => {
+        core.events.changeTitle.emit('Webshop')
+
         fetcher('/api/frontpage', 'GET')
             .then((res) => {
                 setData(res.data)

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 // Logic
 import core from '../logic/core'
@@ -52,6 +52,10 @@ const Account: React.FC = ({ children }) => {
     const { colorMode } = useColorMode()
 
     const router = useRouter()
+
+    useEffect(() => {
+        core.events.changeTitle.emit('Webshop | Account')
+    }, [])
 
     return (
         <Public>

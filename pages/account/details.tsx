@@ -46,6 +46,10 @@ const Details: React.FC = () => {
     const [address, setAddress] = useState(user?.address)
 
     useEffect(() => {
+        core.events.changeTitle.emit('Webshop | Account - Details')
+    }, [])
+
+    useEffect(() => {
         if (user && firstname && lastname && phone && address) {
             if (firstname !== user.firstname && firstname?.length > 2)
                 setDisabled(false)

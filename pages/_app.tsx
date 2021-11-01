@@ -7,7 +7,7 @@ import theme from '../src/config/theme'
 import Global from '../src/layouts/Global'
 
 // UI
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, CSSReset } from '@chakra-ui/react'
 
 // Styles
 import '../src/assets/styles/index.scss'
@@ -17,6 +17,7 @@ const MyApp = ({ Component, pageProps }) => {
         <ChakraProvider theme={theme}>
             <Global>
                 <Component {...pageProps} />
+                <CSSReset />
             </Global>
         </ChakraProvider>
     )

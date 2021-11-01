@@ -2,8 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { ProductField } from '../../src/config/types'
 import { ProductsDocument } from '../../src/models/products'
 
+// Logic
+import core from '../../src/logic/core'
+
 // Routing
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 // Layout
 import Public from '../../src/layouts/Public'
@@ -64,8 +68,9 @@ const ProductPage: React.FC = () => {
             fetcher(`/api/product/${product_url}`, 'GET')
                 .then((res) => {
                     if (res.data) {
-                        console.log(res.data)
-
+                        core.events.changeTitle.emit(
+                            `Webshop | ${res.data.name}`
+                        )
                         setData(res.data)
                         setLoading(false)
                     }
