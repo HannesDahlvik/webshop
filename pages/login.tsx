@@ -24,8 +24,8 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import auth from '../src/services/auth'
 import jwtDecode from 'jwt-decode'
 import fetcher from '../src/utils/fetcher'
-import useInfoHandler from '../src/frontend/utils/useInfoHandler'
-import useErrorHandler from '../src/frontend/utils/useErrorHandler'
+import useInfoHandler from '../src/utils/useInfoHandler'
+import useErrorHandler from '../src/utils/useErrorHandler'
 
 const Login: React.FC = () => {
     const InfoHandler = useInfoHandler()
