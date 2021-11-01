@@ -1,17 +1,4 @@
 // Primary types
-export interface Products {
-    _id: string
-    createAt: string
-    updatedAt: string
-    name: string
-    url: string
-    shortDescription: string
-    description: string
-    price: number
-    image: string[]
-    qty?: number
-}
-
 export interface Cart {
     product_id: string
     qty: number

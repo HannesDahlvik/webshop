@@ -6,7 +6,6 @@ import { usePulse } from '@pulsejs/react'
 
 // UI
 import {
-    Grid,
     Flex,
     Box,
     FormControl,
@@ -21,9 +20,11 @@ import {
     NumberIncrementStepper,
     NumberDecrementStepper,
     Button,
-    Text,
+    Heading,
+    Editable,
+    EditableInput,
+    EditablePreview,
     Tag,
-    TagLeftIcon,
     TagLabel,
     Image
 } from '@chakra-ui/react'
@@ -45,22 +46,22 @@ const CreateProduct: React.FC = () => {
     const [name, setName] = useState('')
     const [price, setPrice] = useState('')
     const [desc, setDesc] = useState('')
-    const [shortDesc, setShortDesc] = useState('')
+    const [fields, setFields] = useState<any[]>([
+        {
+            title: 'Description',
+            value: ''
+        }
+    ])
 
     const [disabled, setDisabled] = useState(true)
 
     const [previews, setPreviews] = useState<any[]>([])
 
     useEffect(() => {
-        if (
-            name.length > 2 &&
-            parseFloat(price) > 0 &&
-            desc.length > 2 &&
-            shortDesc.length > 2
-        )
+        if (name.length > 2 && parseFloat(price) > 0 && desc.length > 2)
             setDisabled(false)
         else setDisabled(true)
-    }, [name, price, desc, shortDesc])
+    }, [name, price, desc])
 
     const handleInputChange = (ev: any) => {
         ev.preventDefault()
@@ -90,15 +91,15 @@ const CreateProduct: React.FC = () => {
         setName('')
         setPrice('0.00')
         setDesc('')
-        setShortDesc('')
         setPreviews([])
     }
 
+    const handleAddField = () => {}
+
     const handleSubmit = () => {
-        fetcher('api/createProduct', 'POST', {
+        fetcher('/api/createProduct', 'POST', {
             name,
             description: desc,
-            shortDesc,
             price
         })
             .then((res) => {
@@ -129,11 +130,15 @@ const CreateProduct: React.FC = () => {
             m="0 auto"
             mt="8"
         >
+            <FormControl mb="2">
+                <Heading>General Info</Heading>
+            </FormControl>
+
             <FormControl mb="6" isRequired>
-                <FormLabel>
+                <Label>
                     Name
                     <FormHelper label="The name of the product!" />
-                </FormLabel>
+                </Label>
 
                 <Input
                     placeholder="eg. Ryzen 5 2600X"
@@ -143,10 +148,10 @@ const CreateProduct: React.FC = () => {
             </FormControl>
 
             <FormControl mb="6" isRequired>
-                <FormLabel>
+                <Label>
                     Price
                     <FormHelper label="Price of the product" />
-                </FormLabel>
+                </Label>
 
                 <NumberInput
                     min={0}
@@ -165,37 +170,53 @@ const CreateProduct: React.FC = () => {
 
             <FormControl mb="6" isRequired>
                 <FormLabel>
-                    Description
-                    <FormHelper label="The longer description for the page!" />
+                    Card Description
+                    <FormHelper label="Text will be shown on product cards" />
                 </FormLabel>
 
-                <Textarea
-                    h="250px"
-                    resize="none"
-                    placeholder="Lorem ipsum dolor sit."
+                <Input
+                    placeholder="eg. Lorem ipsum dolor sit."
                     value={desc}
                     onChange={(ev) => setDesc(ev.target.value)}
                 />
             </FormControl>
 
-            <FormControl mb="6" isRequired>
-                <FormLabel>
-                    Short Description
-                    <FormHelper label="The shorter description for product cards!" />
-                </FormLabel>
-
-                <Input
-                    placeholder="Lorem ipsum dolor sit."
-                    value={shortDesc}
-                    onChange={(ev) => setShortDesc(ev.target.value)}
-                />
+            <FormControl mt="4">
+                <Heading>Fields</Heading>
             </FormControl>
 
+            {fields.map((row, i: number) => {
+                return (
+                    <FormControl mt="6" isRequired key={i}>
+                        <Label>
+                            <Editable defaultValue={row.title}>
+                                <EditablePreview />
+                                <EditableInput />
+                            </Editable>
+                            <FormHelper label="The longer description for the page!" />
+                        </Label>
+
+                        <Textarea
+                            h="250px"
+                            resize="none"
+                            placeholder="Lorem ipsum dolor sit."
+                            defaultValue={row.value}
+                            onChange={(ev) => {
+                                row.value = ev.target.value
+                            }}
+                        />
+                    </FormControl>
+                )
+            })}
+            <Button size="sm" w="100%" my="2" onClick={handleAddField}>
+                <Icon as={Plus} mr="1" /> Add Field
+            </Button>
+
             <FormControl mb="6" isRequired>
-                <FormLabel>
+                <Label>
                     Category
                     <FormHelper label="Category for the product!" />
-                </FormLabel>
+                </Label>
 
                 <Tag size="lg" colorScheme="primary" cursor="pointer">
                     <TagLabel>test</TagLabel>
@@ -203,10 +224,10 @@ const CreateProduct: React.FC = () => {
             </FormControl>
 
             <FormControl mb="6" isRequired>
-                <FormLabel>
+                <Label>
                     Images
                     <FormHelper label="Images for the product!" />
-                </FormLabel>
+                </Label>
 
                 <Button
                     size="sm"
@@ -293,5 +314,13 @@ const FormHelper: React.FC<{
         <Tooltip label={props.label} placement="top">
             <Icon ml="1" as={Question} weight="fill" />
         </Tooltip>
+    )
+}
+
+const Label: React.FC = ({ children }) => {
+    return (
+        <FormLabel display="flex" alignItems="center">
+            {children}
+        </FormLabel>
     )
 }

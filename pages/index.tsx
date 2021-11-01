@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Products } from '../src/frontend/config/types'
+import { ProductsDocument } from '../src/models/products'
 
 // Logic
-import core from '../src/frontend/logic/core'
+import core from '../src/logic/core'
 import { usePulse } from '@pulsejs/react'
 
 // Layout
-import Public from '../src/frontend/layouts/Public'
+import Public from '../src/layouts/Public'
 
 // UI
 import { Grid, Heading, Flex, Image } from '@chakra-ui/react'
@@ -19,12 +19,12 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
 // Components
-import ProductCard from '../src/frontend/components/public/ProductCard'
-import Loader from '../src/frontend/components/Loader'
+import ProductCard from '../src/components/public/ProductCard'
+import Loader from '../src/components/Loader'
 
 // Utils
-import fetcher from '../src/frontend/utils/fetcher'
-import useErrorHandler from '../src/frontend/utils/useErrorHandler'
+import fetcher from '../src/utils/fetcher'
+import useErrorHandler from '../src/utils/useErrorHandler'
 
 SwiperCore.use([Navigation, Pagination])
 
@@ -91,7 +91,7 @@ const Home: React.FC = () => {
                     m="0 auto"
                     p="32px 0"
                 >
-                    {data.map((row: Products, i: number) => (
+                    {data.map((row: ProductsDocument, i: number) => (
                         <ProductCard {...row} key={i} />
                     ))}
                 </Grid>

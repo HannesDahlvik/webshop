@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import dbConnect from '../../../src/backend/middleware/database'
-import config from '../../../src/backend/config/config'
+import dbConnect from '../../../src/middleware/database'
+import config from '../../../src/config/config'
 
 // Model
-import User from '../../../src/backend/models/user'
-import { UserDoc } from '../../../src/backend/models/user'
+import User from '../../../src/models/user'
+import { UserDoc } from '../../../src/models/user'
 
 // Utils
 import jwt from 'jsonwebtoken'

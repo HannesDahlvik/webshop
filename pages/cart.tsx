@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { Products } from '../src/frontend/config/types'
+import { ProductsDocument } from '../src/models/products'
 
 // Logic
-import core from '../src/frontend/logic/core'
+import core from '../src/logic/core'
 import { usePulse } from '@pulsejs/react'
 
 // Routing
 import Link from 'next/link'
 
 // Layout
-import Public from '../src/frontend/layouts/Public'
+import Public from '../src/layouts/Public'
 
 // UI
 import {
@@ -35,15 +35,15 @@ import {
 import { ShoppingCart, Trash } from 'phosphor-react'
 
 // Components
-import Loader from '../src/frontend/components/Loader'
+import Loader from '../src/components/Loader'
 
 // Utils
-import fetcher from '../src/frontend/utils/fetcher'
-import useErrorHandler from '../src/frontend/utils/useErrorHandler'
-import ImageParser from '../src/frontend/utils/ImageParser'
+import fetcher from '../src/utils/fetcher'
+import useErrorHandler from '../src/utils/useErrorHandler'
+import ImageParser from '../src/utils/ImageParser'
 
 // Services
-import cart from '../src/frontend/services/cart'
+import cart from '../src/services/cart'
 
 const Cart: React.FC = () => {
     const ErrorHandler = useErrorHandler()
@@ -62,7 +62,7 @@ const Cart: React.FC = () => {
         })
             .then((res) => {
                 if (res.data !== false) {
-                    res.data.map((row: Products, i: number) => {
+                    res.data.map((row: ProductsDocument, i: number) => {
                         if (row._id === cartState[i].product_id) {
                             row.qty = cartState[i].qty
                         }
@@ -117,63 +117,67 @@ const Cart: React.FC = () => {
                                 </Tr>
                             </Thead>
                             <Tbody>
-                                {cartItems.map((row: Products, i: number) => {
-                                    return (
-                                        <Tr key={row._id}>
-                                            <Td>
-                                                <Icon
-                                                    as={Trash}
-                                                    weight="fill"
-                                                    fontSize="xl"
-                                                    cursor="pointer"
-                                                    onClick={() =>
-                                                        cart.remove(i)
-                                                    }
-                                                />
-                                            </Td>
-                                            <Td>
-                                                <Image
-                                                    w="50px"
-                                                    h="50px"
-                                                    fit="cover"
-                                                    src={ImageParser(
-                                                        row.image[0]
-                                                    )}
-                                                    alt={row.name}
-                                                />
-                                            </Td>
-                                            <Td>
-                                                <Link
-                                                    passHref
-                                                    href={`/product/${row.url}`}
-                                                    key={row._id}
-                                                >
-                                                    {row.name}
-                                                </Link>
-                                            </Td>
-                                            <Td>{row.price}€</Td>
-                                            <Td>
-                                                <NumberInput
-                                                    defaultValue={row.qty}
-                                                    w="80px"
-                                                    min={1}
-                                                    max={99}
-                                                >
-                                                    <NumberInputField />
-                                                    <NumberInputStepper>
-                                                        <NumberIncrementStepper />
-                                                        <NumberDecrementStepper />
-                                                    </NumberInputStepper>
-                                                </NumberInput>
-                                            </Td>
-                                            {row.qty ? (
-                                                <Td>{row.price * row.qty}€</Td>
-                                            ) : (
-                                                <></>
-                                            )}
-                                        </Tr>
-                                    )
-                                })}
+                                {cartItems.map(
+                                    (row: ProductsDocument, i: number) => {
+                                        return (
+                                            <Tr key={row._id}>
+                                                <Td>
+                                                    <Icon
+                                                        as={Trash}
+                                                        weight="fill"
+                                                        fontSize="xl"
+                                                        cursor="pointer"
+                                                        onClick={() =>
+                                                            cart.remove(i)
+                                                        }
+                                                    />
+                                                </Td>
+                                                <Td>
+                                                    <Image
+                                                        w="50px"
+                                                        h="50px"
+                                                        fit="cover"
+                                                        src={ImageParser(
+                                                            row.image[0]
+                                                        )}
+                                                        alt={row.name}
+                                                    />
+                                                </Td>
+                                                <Td>
+                                                    <Link
+                                                        passHref
+                                                        href={`/product/${row.url}`}
+                                                        key={row._id}
+                                                    >
+                                                        {row.name}
+                                                    </Link>
+                                                </Td>
+                                                <Td>{row.price}€</Td>
+                                                <Td>
+                                                    <NumberInput
+                                                        defaultValue={row.qty}
+                                                        w="80px"
+                                                        min={1}
+                                                        max={99}
+                                                    >
+                                                        <NumberInputField />
+                                                        <NumberInputStepper>
+                                                            <NumberIncrementStepper />
+                                                            <NumberDecrementStepper />
+                                                        </NumberInputStepper>
+                                                    </NumberInput>
+                                                </Td>
+                                                {row.qty ? (
+                                                    <Td>
+                                                        {row.price * row.qty}€
+                                                    </Td>
+                                                ) : (
+                                                    <></>
+                                                )}
+                                            </Tr>
+                                        )
+                                    }
+                                )}
                             </Tbody>
                         </Table>
                     )}

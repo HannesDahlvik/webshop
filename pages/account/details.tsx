@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 
 // Logic
-import core from '../../src/frontend/logic/core'
+import core from '../../src/logic/core'
 import { usePulse } from '@pulsejs/react'
 
 // Layout
-import Account from '../../src/frontend/layouts/Account'
+import Account from '../../src/layouts/Account'
 
 // UI
 import {
@@ -21,15 +21,15 @@ import {
 } from '@chakra-ui/react'
 
 // Services
-import auth from '../../src/frontend/services/auth'
+import auth from '../../src/services/auth'
 
 // Utils
-import useInfoHandler from '../../src/frontend/utils/useInfoHandler'
-import useErrorHandler from '../../src/frontend/utils/useErrorHandler'
+import useInfoHandler from '../../src/utils/useInfoHandler'
+import useErrorHandler from '../../src/utils/useErrorHandler'
 
 // Components
-import Loader from '../../src/frontend/components/Loader'
-import fetcher from '../../src/frontend/utils/fetcher'
+import Loader from '../../src/components/Loader'
+import fetcher from '../../src/utils/fetcher'
 
 const Details: React.FC = () => {
     const Infohandler = useInfoHandler()

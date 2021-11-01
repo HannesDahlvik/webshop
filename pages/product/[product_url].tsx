@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Products } from '../../src/frontend/config/types'
+import { ProductsDocument } from '../../src/models/products'
 
 // Routing
 import { useRouter } from 'next/router'
 
 // Layout
-import Public from '../../src/frontend/layouts/Public'
+import Public from '../../src/layouts/Public'
 
 // UI
 import {
@@ -33,16 +33,16 @@ import {
 import { CaretLeft, CaretRight, HeartStraight } from 'phosphor-react'
 
 // Components
-import Loader from '../../src/frontend/components/Loader'
+import Loader from '../../src/components/Loader'
 
 // Utils
-import useInfoHandler from '../../src/frontend/utils/useInfoHandler'
-import useErrorHandler from '../../src/frontend/utils/useErrorHandler'
-import ImageParser from '../../src/frontend/utils/ImageParser'
-import fetcher from '../../src/frontend/utils/fetcher'
+import useInfoHandler from '../../src/utils/useInfoHandler'
+import useErrorHandler from '../../src/utils/useErrorHandler'
+import ImageParser from '../../src/utils/ImageParser'
+import fetcher from '../../src/utils/fetcher'
 
 // Services
-import cart from '../../src/frontend/services/cart'
+import cart from '../../src/services/cart'
 
 const ProductPage: React.FC = () => {
     const InfoHandler = useInfoHandler()
@@ -54,7 +54,7 @@ const ProductPage: React.FC = () => {
     const { colorMode } = useColorMode()
 
     const [loading, setLoading] = useState(true)
-    const [data, setData] = useState<Products | null>(null)
+    const [data, setData] = useState<ProductsDocument | null>(null)
     const [qty, setQty] = useState(1)
     const [imageIndex, setImageIndex] = useState(0)
 
@@ -63,6 +63,8 @@ const ProductPage: React.FC = () => {
             fetcher(`/api/product/${product_url}`, 'GET')
                 .then((res) => {
                     if (res.data) {
+                        console.log(res.data)
+
                         setData(res.data)
                         setLoading(false)
                     }
@@ -184,19 +186,24 @@ const ProductPage: React.FC = () => {
                     direction="column"
                 >
                     <Accordion defaultIndex={[0]} allowMultiple>
-                        <AccordionItem px="12">
-                            <h2>
-                                <AccordionButton>
-                                    <Box flex="1" textAlign="left">
-                                        Description
-                                    </Box>
-                                    <AccordionIcon />
-                                </AccordionButton>
-                            </h2>
-                            <AccordionPanel pb={4}>
-                                {data.description}
-                            </AccordionPanel>
-                        </AccordionItem>
+                        {data.fields.map((row: any) => {
+                            return (
+                                <AccordionItem px="12" key={row.title}>
+                                    <h2>
+                                        <AccordionButton>
+                                            <Box flex="1" textAlign="left">
+                                                {row.title}
+                                            </Box>
+                                            <AccordionIcon />
+                                        </AccordionButton>
+                                    </h2>
+
+                                    <AccordionPanel pb="4">
+                                        {row.value}
+                                    </AccordionPanel>
+                                </AccordionItem>
+                            )
+                        })}
                     </Accordion>
 
                     <HStack mt="auto" px="12">

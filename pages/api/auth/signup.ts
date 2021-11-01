@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import dbConnect from '../../../src/backend/middleware/database'
+import dbConnect from '../../../src/middleware/database'
 
 // Model
-import User from '../../../src/backend/models/user'
+import User from '../../../src/models/user'
 
 // Utils
 import bcrypt from 'bcryptjs'

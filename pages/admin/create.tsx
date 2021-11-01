@@ -1,11 +1,11 @@
 import React from 'react'
 
 // Logic
-import core from '../../src/frontend/logic/core'
+import core from '../../src/logic/core'
 import { usePulse } from '@pulsejs/react'
 
 // Layout
-import Admin from '../../src/frontend/layouts/Admin'
+import Admin from '../../src/layouts/Admin'
 
 // UI
 import {
@@ -19,7 +19,7 @@ import {
 } from '@chakra-ui/react'
 
 // Components
-import CreateProduct from '../../src/frontend/components/admin/CreateProduct'
+import CreateProduct from '../../src/components/admin/CreateProduct'
 
 const Create: React.FC = () => {
     const wrapperSize = usePulse(core.state.wrapperSize)

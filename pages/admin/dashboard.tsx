@@ -1,7 +1,7 @@
 import React from 'react'
 
 // Layout
-import Admin from '../../src/frontend/layouts/Admin'
+import Admin from '../../src/layouts/Admin'
 
 const Dashboard: React.FC = () => {
     return (

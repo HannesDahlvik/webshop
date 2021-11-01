@@ -1,16 +1,16 @@
 import React from 'react'
 
 // Config
-import theme from '../src/frontend/config/theme'
+import theme from '../src/config/theme'
 
 // Layout
-import Global from '../src/frontend/layouts/Global'
+import Global from '../src/layouts/Global'
 
 // UI
 import { ChakraProvider } from '@chakra-ui/react'
 
 // Styles
-import '../src/frontend/assets/styles/index.scss'
+import '../src/assets/styles/index.scss'
 
 const MyApp = ({ Component, pageProps }) => {
     return (

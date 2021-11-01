@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 
 // Layout
-import Public from '../src/frontend/layouts/Public'
+import Public from '../src/layouts/Public'
 
 // UI
 import {
@@ -21,9 +21,9 @@ import {
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
 // utils
-import auth from '../src/frontend/services/auth'
+import auth from '../src/services/auth'
 import jwtDecode from 'jwt-decode'
-import fetcher from '../src/frontend/utils/fetcher'
+import fetcher from '../src/utils/fetcher'
 import useInfoHandler from '../src/frontend/utils/useInfoHandler'
 import useErrorHandler from '../src/frontend/utils/useErrorHandler'
 

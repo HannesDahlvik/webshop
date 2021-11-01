@@ -3,49 +3,48 @@ import mongoose, { Schema, Model, model, Document } from 'mongoose'
 const productsSchema: Schema = new Schema(
     {
         name: {
-            type: String,
+            type: Schema.Types.String,
             required: true
         },
         url: {
-            type: String,
-            required: true
-        },
-        shortDescription: {
-            type: String,
+            type: Schema.Types.String,
             required: true
         },
         description: {
-            type: String,
+            type: Schema.Types.String,
             required: true
         },
         price: {
-            type: Number,
+            type: Schema.Types.Number,
             required: true
         },
         image: [
             {
-                type: String,
+                type: Schema.Types.String,
                 required: true
             }
         ],
         category: [
             {
-                type: String,
+                type: Schema.Types.String,
                 required: true
             }
-        ]
+        ],
+        fields: [{}]
     },
     { timestamps: true }
 )
 
-export interface ProductsDocument extends Document {
+export interface ProductsDocument {
+    _id: string
     name: string
     url: string
-    shortDescription: string
     description: string
     price: number
     image: string[]
     category: string[]
+    fields: object[]
+    qty?: number
 }
 
 const Products: Model<ProductsDocument> = model('Product', productsSchema)

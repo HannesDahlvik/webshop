@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import dbConnect from '../../../src/backend/middleware/database'
+import dbConnect from '../../../src/middleware/database'
 
 // Model
-import products from '../../../src/backend/models/products'
+import products from '../../../src/models/products'
 
 // Utils
-import logger from '../../../src/backend/utils/logger'
+import logger from '../../../src/utils/logger'
 
 dbConnect()
 

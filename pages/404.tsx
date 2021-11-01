@@ -4,7 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 
 // Layout
-import Public from '../src/frontend/layouts/Public'
+import Public from '../src/layouts/Public'
 
 // UI
 import { Box, Button, Code, Divider, Flex, Heading } from '@chakra-ui/react'

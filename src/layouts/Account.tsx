@@ -1,7 +1,7 @@
 import React from 'react'
 
 // Logic
-import core from '../../../src/frontend/logic/core'
+import core from '../logic/core'
 import { usePulse } from '@pulsejs/react'
 
 // Routing

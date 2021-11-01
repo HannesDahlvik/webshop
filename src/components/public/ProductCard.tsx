@@ -1,5 +1,5 @@
 import React from 'react'
-import { Products } from '../../config/types'
+import { ProductsDocument } from '../../models/products'
 
 // Routing
 import Link from 'next/link'
@@ -14,7 +14,7 @@ import useErrorHandler from '../../utils/useErrorHandler'
 import cart from '../../services/cart'
 import ImageParser from '../../utils/ImageParser'
 
-const ProductCard: React.FC<Products> = (props) => {
+const ProductCard: React.FC<ProductsDocument> = (props) => {
     const InfoHandler = useInfoHandler()
     const ErrorHandler = useErrorHandler()
 
@@ -53,7 +53,7 @@ const ProductCard: React.FC<Products> = (props) => {
                 <Link passHref href={`/product/${props.url}`}>
                     <Box cursor="pointer">
                         <Heading size="md">{props.name}</Heading>
-                        <Text>{props.shortDescription}</Text>
+                        <Text>{props.description}</Text>
                         <Text>{props.price}€</Text>
                     </Box>
                 </Link>
