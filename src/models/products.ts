@@ -51,4 +51,4 @@ const Products: Model<ProductsDocument> = model('Product', productsSchema)
 
 delete mongoose.connection.models['Product']
 
-export default mongoose.models.Products || Products
+export default Products

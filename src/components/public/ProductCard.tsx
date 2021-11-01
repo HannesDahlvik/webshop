@@ -8,10 +8,12 @@ import Link from 'next/link'
 import { Box, Image, Heading, Text, Button, Icon } from '@chakra-ui/react'
 import { ShoppingCart } from 'phosphor-react'
 
+// Services
+import cart from '../../services/cart'
+
 // Utils
 import useInfoHandler from '../../utils/useInfoHandler'
 import useErrorHandler from '../../utils/useErrorHandler'
-import cart from '../../services/cart'
 import ImageParser from '../../utils/ImageParser'
 
 const ProductCard: React.FC<ProductsDocument> = (props) => {
@@ -44,7 +46,7 @@ const ProductCard: React.FC<ProductsDocument> = (props) => {
                         fit="cover"
                         src={ImageParser(props.image[0])}
                         alt={props.name}
-                        fallbackSrc="https://dummyimage.com/1000x1000.png"
+                        fallbackSrc="/api/image/placeholder"
                     />
                 </Link>
             </Box>

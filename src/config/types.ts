@@ -1,4 +1,10 @@
 // Primary types
+export interface ProductField {
+    type: 'text'
+    textTitle?: string
+    textValue?: string
+}
+
 export interface Cart {
     product_id: string
     qty: number

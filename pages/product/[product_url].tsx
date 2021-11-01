@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { ProductField } from '../../src/config/types'
 import { ProductsDocument } from '../../src/models/products'
 
 // Routing
@@ -172,7 +173,7 @@ const ProductPage: React.FC = () => {
                                     <Image
                                         src={ImageParser(row)}
                                         alt={row}
-                                        fallbackSrc="https://dummyimage.com/1000x1000.png"
+                                        fallbackSrc="/api/image/placeholder"
                                     />
                                 </Box>
                             )
@@ -186,23 +187,24 @@ const ProductPage: React.FC = () => {
                     direction="column"
                 >
                     <Accordion defaultIndex={[0]} allowMultiple>
-                        {data.fields.map((row: any) => {
-                            return (
-                                <AccordionItem px="12" key={row.title}>
-                                    <h2>
-                                        <AccordionButton>
-                                            <Box flex="1" textAlign="left">
-                                                {row.title}
-                                            </Box>
-                                            <AccordionIcon />
-                                        </AccordionButton>
-                                    </h2>
+                        {data.fields.map((row: ProductField) => {
+                            if (row.type === 'text')
+                                return (
+                                    <AccordionItem px="12" key={row.textTitle}>
+                                        <h2>
+                                            <AccordionButton>
+                                                <Box flex="1" textAlign="left">
+                                                    {row.textTitle}
+                                                </Box>
+                                                <AccordionIcon />
+                                            </AccordionButton>
+                                        </h2>
 
-                                    <AccordionPanel pb="4">
-                                        {row.value}
-                                    </AccordionPanel>
-                                </AccordionItem>
-                            )
+                                        <AccordionPanel pb="4">
+                                            {row.textValue}
+                                        </AccordionPanel>
+                                    </AccordionItem>
+                                )
                         })}
                     </Accordion>
 

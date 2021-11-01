@@ -8,7 +8,7 @@ dbConnect()
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.body.ids) {
-        Products.find({
+        await Products.find({
             _id: { $in: req.body.ids }
         })
             .then((products) => {

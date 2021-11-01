@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import dbConnect from '../../../src/middleware/database'
 
 // Model
-import products from '../../../src/models/products'
+import Products from '../../../src/models/products'
 
 // Utils
 import logger from '../../../src/utils/logger'
@@ -10,12 +10,11 @@ import logger from '../../../src/utils/logger'
 dbConnect()
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { name } = req.query
+    const { product_name } = req.query
 
-    products
-        .findOne({
-            url: name
-        })
+    Products.findOne({
+        url: product_name
+    })
         .then((result) => {
             res.send(result)
         })

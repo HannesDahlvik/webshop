@@ -27,7 +27,7 @@ const Create: React.FC = () => {
     return (
         <Admin>
             <Box p="12">
-                <Heading textAlign="center" mb="12">
+                <Heading fontSize="5xl" textAlign="center" mb="12">
                     Create
                 </Heading>
 
