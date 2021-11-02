@@ -1,3 +1,5 @@
+import { IconProps } from 'phosphor-react'
+
 // Primary types
 export interface ProductField {
     type: 'text'
@@ -27,4 +29,12 @@ export interface User {
 export interface NavLinks {
     title: string
     path: string
+}
+
+export interface BottomNavLinks {
+    title: string
+    path: string
+    icon: React.ForwardRefExoticComponent<
+        IconProps & React.RefAttributes<SVGSVGElement>
+    >
 }

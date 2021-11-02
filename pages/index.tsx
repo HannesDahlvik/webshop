@@ -88,10 +88,17 @@ const Home: React.FC = () => {
             {data.length > 0 ? (
                 <Grid
                     w={wrapperSize}
-                    templateColumns="repeat(4, 1fr)"
-                    gridGap="4"
+                    templateColumns={
+                        wrapperSize === '90%'
+                            ? 'repeat(2, 1fr)'
+                            : wrapperSize === '2xl'
+                            ? 'repeat(3, 1fr)'
+                            : 'repeat(4, 1fr)'
+                    }
+                    gridGap="2"
                     m="0 auto"
                     p="32px 0"
+                    mb="12"
                 >
                     {data.map((row: ProductsDocument, i: number) => (
                         <ProductCard {...row} key={i} />

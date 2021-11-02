@@ -340,8 +340,6 @@ const CreateProduct: React.FC = () => {
                 >
                     Submit
                 </Button>
-
-                {/* Basically todoo is create category selecting and file/image upload maybe video😮 (at some point) */}
             </Flex>
         </>
     )

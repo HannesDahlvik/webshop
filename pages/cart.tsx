@@ -82,7 +82,8 @@ const Cart: React.FC = () => {
                     align="center"
                     direction="column"
                     w={wrapperSize}
-                    m="100px auto"
+                    p="200px 0"
+                    m="0 auto"
                 >
                     <Icon fontSize="8xl" mb="25px" as={ShoppingCart} />
                     <Heading>No products in cart!</Heading>
@@ -99,7 +100,7 @@ const Cart: React.FC = () => {
     if (cartState) {
         return (
             <Public>
-                <Grid w={wrapperSize} m="50px auto">
+                <Grid w={wrapperSize} m="50px auto" mb="20em">
                     <Heading>Cart</Heading>
 
                     {cartItems.length === 0 ? (

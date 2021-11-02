@@ -135,7 +135,7 @@ const Navbar: React.FC = () => {
                     </form>
 
                     <Flex ml="auto">
-                        <HStack spacing="24px">
+                        <HStack spacing="4">
                             {user?.role === 'admin' ? (
                                 <Link passHref href="/admin/dashboard">
                                     <Button colorScheme="green">Admin</Button>
@@ -230,11 +230,15 @@ const Navbar: React.FC = () => {
                                         weight="fill"
                                         fontSize="3xl"
                                         cursor="pointer"
-                                        zIndex="99"
                                     />
                                     {cart.length > 0 ? (
                                         <Badge
-                                            colorScheme="primary"
+                                            backgroundColor="blue.100"
+                                            color={
+                                                colorMode === 'dark'
+                                                    ? 'gray.700'
+                                                    : ''
+                                            }
                                             borderRadius="full"
                                             pos="absolute"
                                             top="0"

@@ -31,7 +31,7 @@ const ProductCard: React.FC<ProductsDocument> = (props) => {
 
     return (
         <Box
-            h="350"
+            minH="350"
             border="1px solid rgba(100, 100, 100, 0.25)"
             borderRadius="lg"
         >
@@ -54,8 +54,10 @@ const ProductCard: React.FC<ProductsDocument> = (props) => {
             <Box p="6">
                 <Link passHref href={`/product/${props.url}`}>
                     <Box cursor="pointer">
-                        <Heading size="md">{props.name}</Heading>
-                        <Text>{props.description}</Text>
+                        <Heading size="md" noOfLines={2}>
+                            {props.name}
+                        </Heading>
+                        <Text noOfLines={1}>{props.description}</Text>
                         <Text>{props.price}€</Text>
                     </Box>
                 </Link>

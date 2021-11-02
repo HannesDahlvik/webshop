@@ -10,7 +10,7 @@ import apiOptions from '../../src/utils/apiOptions'
 
 dbConnect()
 
-const handler = nc<NextApiRequest, NextApiResponse>(apiOptions).get(
+const handler = nc<NextApiRequest, NextApiResponse>(apiOptions).post(
     async (req, res) => {
         if (req.body.ids) {
             await Products.find({
