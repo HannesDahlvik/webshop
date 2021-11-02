@@ -24,8 +24,7 @@ const Admin: React.FC = ({ children }) => {
     useEffect(() => {
         if (user.role !== 'admin') {
             router.push('/')
-        }
-        setRender(true)
+        } else setRender(true)
     }, [user])
 
     if (render) {
