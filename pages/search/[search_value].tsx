@@ -21,7 +21,6 @@ import Loader from '../../src/components/Loader'
 // Utils
 import fetcher from '../../src/utils/fetcher'
 import useErrorHandler from '../../src/utils/useErrorHandler'
-import Fuse from 'fuse.js'
 
 const Search: React.FC = () => {
     const ErrorHandler = useErrorHandler()
@@ -39,15 +38,13 @@ const Search: React.FC = () => {
     }, [router.asPath])
 
     const handleSearch = () => {
-        fetcher('/api/search', 'GET')
+        fetcher(`/api/search/${search_value}`, 'GET')
             .then((res) => {
-                const fuse: any = new Fuse(res.data, {
-                    keys: ['name', 'description']
-                }).search(search_value as string)
+                const data = res.data
 
-                if (fuse.length === 0) setNoProducts(true)
+                if (data.length === 0) setNoProducts(true)
                 else setNoProducts(false)
-                setData(fuse)
+                setData(data)
             })
             .catch((err) => ErrorHandler(err.message))
     }
