@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 
 // Routing
 import { useRouter } from 'next/router'
@@ -33,36 +33,46 @@ const Login: React.FC = () => {
 
     const router = useRouter()
 
-    const [showPassword, setShowPassword] = useState(false)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const handleLogin = (ev: React.FormEvent) => {
+    const [showPassword, setShowPassword] = useState(false)
+    const [disabled, setDisabled] = useState(true)
+
+    useEffect(() => {
+        if (email.length > 2 && password.length > 5) setDisabled(false)
+        else setDisabled(true)
+    }, [email, password])
+
+    const handleLogin = (ev: FormEvent) => {
         ev.preventDefault()
 
-        if (email !== '' && password !== '') {
+        if (!disabled)
             fetcher('/api/auth/login', 'POST', {
                 email,
                 password
             })
                 .then((res) => {
-                    if (res.data.error) {
-                        ErrorHandler(res.data.error)
+                    const data = res.data
+
+                    if (data.error) {
+                        ErrorHandler(data.error)
                     } else {
-                        auth.setToken(res.data.token)
-                        auth.setUser(jwtDecode(res.data.token))
+                        auth.setToken(data.token)
+                        auth.setUser(jwtDecode(data.token))
                         InfoHandler('Successfully logged in!')
                         router.push('/')
                     }
                 })
-                .catch((err) => ErrorHandler('There was an error with login!'))
-        }
+                .catch((err) =>
+                    ErrorHandler('There was an error with login!', err)
+                )
     }
 
     return (
         <Public>
-            <Flex justify="center" align="center" pt="50px" textAlign="center">
-                <Box maxW="375px" w="100%">
+            <Flex justify="center" align="center" pt="7em" textAlign="center">
+                <Box maxW="400px" w="100%">
                     <Heading fontSize="5xl" mb="8">
                         Login
                     </Heading>
@@ -108,6 +118,7 @@ const Login: React.FC = () => {
                         <Button
                             isFullWidth
                             colorScheme="primary"
+                            isDisabled={disabled}
                             onClick={handleLogin}
                         >
                             Login

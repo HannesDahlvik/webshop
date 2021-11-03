@@ -5,7 +5,7 @@ import core from '../logic/core'
 import { usePulse } from '@pulsejs/react'
 
 // UI
-import { Flex, Box } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 
 // Components
 import Navbar from '../components/public/Navbar'
@@ -16,17 +16,16 @@ const Public: React.FC = ({ children }) => {
     const wrapperSize = usePulse(core.state.wrapperSize)
 
     return (
-        <Flex flexDir="column" minH="100vh">
+        <div>
             {wrapperSize !== '90%' && <Navbar />}
 
-            <Box as="main" flex="1 0 auto" h="100%">
+            <Box as="main" minH="calc(100vh - 80px)">
                 {children}
-
-                <Footer />
             </Box>
 
+            <Footer />
             {wrapperSize === '90%' && <BottomNavigation />}
-        </Flex>
+        </div>
     )
 }
 
