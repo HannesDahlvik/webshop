@@ -58,6 +58,7 @@ const Navbar: React.FC = () => {
     const user = usePulse(core.state.user)
     const cart = usePulse(core.state.cart)
     const wrapperSize = usePulse(core.state.wrapperSize)
+    const searchValue = usePulse(core.state.searchValue)
 
     const InfoHandler = useInfoHandler()
 
@@ -65,14 +66,12 @@ const Navbar: React.FC = () => {
 
     const { colorMode } = useColorMode()
 
-    const [searchValue, setSearchValue] = useState('')
-
     const handleSearch = (ev: React.FormEvent) => {
         ev.preventDefault()
         if (searchValue.length > 2) {
             router.push(`/search/${searchValue}`)
         } else if (searchValue.length === 0) {
-            InfoHandler('Enter a search value!')
+            router.push('/search')
         } else if (searchValue.length < 3) {
             InfoHandler('Has to be more than 3 characters')
         } else {
@@ -116,7 +115,9 @@ const Navbar: React.FC = () => {
                                     placeholder="Search"
                                     value={searchValue}
                                     onChange={(ev) =>
-                                        setSearchValue(ev.target.value)
+                                        core.state.searchValue.set(
+                                            ev.target.value
+                                        )
                                     }
                                 />
                                 <InputRightElement width="32px" right="4px">

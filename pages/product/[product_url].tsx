@@ -233,7 +233,7 @@ const ProductPage: React.FC = () => {
                                             px="12"
                                             key={row.textTitle}
                                         >
-                                            <h2>
+                                            <Text>
                                                 <AccordionButton>
                                                     <Box
                                                         flex="1"
@@ -243,7 +243,7 @@ const ProductPage: React.FC = () => {
                                                     </Box>
                                                     <AccordionIcon />
                                                 </AccordionButton>
-                                            </h2>
+                                            </Text>
 
                                             <AccordionPanel pb="4">
                                                 {row.textValue}

@@ -9,6 +9,8 @@ const wishlist = state<string[]>([])
 
 const wrapperSize = state('7xl')
 
+const searchValue = state('')
+
 export default {
     user,
     token,
@@ -16,5 +18,7 @@ export default {
     cart,
     wishlist,
 
-    wrapperSize
+    wrapperSize,
+
+    searchValue
 }
