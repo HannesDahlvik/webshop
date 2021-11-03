@@ -16,3 +16,10 @@
         width: 100%;
     }
 }
+
+@media (max-width: 750px) {
+    .product-page {
+        display: flex !important;
+        flex-direction: column;
+    }
+}

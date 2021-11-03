@@ -38,6 +38,7 @@ import fetcher from '../../utils/fetcher'
 
 // Components
 import AddFieldModal from './AddFieldModal'
+import ImageParser from '../../utils/ImageParser'
 
 const CreateProduct: React.FC = () => {
     const InfoHandler = useInfoHandler()
@@ -57,16 +58,22 @@ const CreateProduct: React.FC = () => {
             textValue: ''
         }
     ])
+    const [files, setFiles] = useState<string[]>([])
 
     const [disabled, setDisabled] = useState(true)
 
-    const [previews, setPreviews] = useState<any[]>([])
+    console.log(files)
 
     useEffect(() => {
-        if (name.length > 2 && parseFloat(price) > 0 && desc.length > 2)
+        if (
+            name.length > 2 &&
+            parseFloat(price) > 0 &&
+            desc.length > 2 &&
+            files.length > 0
+        )
             setDisabled(false)
         else setDisabled(true)
-    }, [name, price, desc])
+    }, [name, price, desc, files])
 
     useEvent(core.events.handleAddProductField, (payload) => {
         const arr = [...fields]
@@ -74,35 +81,61 @@ const CreateProduct: React.FC = () => {
         setFields(arr)
     })
 
-    const handleInputChange = (ev: any) => {
-        ev.preventDefault()
+    const handleInputChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+        if (!ev.target.files?.length) return
 
-        const file = ev.target.files[0]
-        const arr = [...previews]
-
-        const reader = new FileReader()
-
-        reader.readAsDataURL(file)
-        reader.onload = () => {
-            if (reader.result) arr.push(reader.result)
-            setPreviews(arr)
+        const evFiles = ev.target.files
+        const formData = new FormData()
+        for (let i = 0; i < evFiles.length; i++) {
+            formData.append('file', evFiles[i])
         }
-        reader.onerror = () => {
-            ErrorHandler('There was an error with image upload!')
-        }
+
+        fetcher('/api/image/upload', 'POST', formData, {
+            'Content-Type': 'multipart/form-data'
+        }).then((res) => {
+            const data = res.data
+            console.log(data)
+
+            if (data.success) {
+                InfoHandler(data.message)
+
+                let arr: string[] = [...files]
+                data.files.map((row: any) => {
+                    arr.push(row.filename)
+                })
+
+                setFiles(arr)
+            } else {
+                ErrorHandler(data.message)
+            }
+        })
     }
 
-    const handleRemoveImage = (num: number) => {
-        const images = [...previews]
-        images.splice(num, 1)
-        setPreviews([...images])
+    const handleRemoveImage = (num: number, imageName: string) => {
+        fetcher(`/api/image/remove`, 'POST', {
+            files: [imageName]
+        })
+            .then((res) => {
+                const data = res.data
+
+                if (data.success) {
+                    InfoHandler(data.message)
+                    const images = [...files]
+                    images.splice(num, 1)
+                    setFiles([...images])
+                } else {
+                    ErrorHandler(data.message)
+                }
+            })
+            .catch((err) => ErrorHandler(err))
     }
 
     const clearValues = () => {
         setName('')
-        setPrice('0.00')
+        setPrice('')
         setDesc('')
-        setPreviews([])
+        setFiles([])
+        setFields([])
     }
 
     const handleSubmit = () => {
@@ -110,7 +143,7 @@ const CreateProduct: React.FC = () => {
             name,
             description: desc,
             price,
-            image: [],
+            image: files,
             fields
         })
             .then((res) => {
@@ -282,14 +315,14 @@ const CreateProduct: React.FC = () => {
                         pos="relative"
                     >
                         <Box w="100%" h="100%">
-                            {previews.length !== 0 && (
+                            {files.length !== 0 && (
                                 <Flex
                                     justify="center"
                                     flexWrap="wrap"
                                     p="4"
                                     pb="0"
                                 >
-                                    {previews.map((row, i: number) => (
+                                    {files.map((row, i: number) => (
                                         <Flex
                                             w="250px"
                                             h="250px"
@@ -307,15 +340,15 @@ const CreateProduct: React.FC = () => {
                                                 fontSize="xl"
                                                 cursor="pointer"
                                                 onClick={() =>
-                                                    handleRemoveImage(i)
+                                                    handleRemoveImage(i, row)
                                                 }
                                             />
 
                                             <Image
                                                 borderRadius="md"
                                                 objectFit="cover"
-                                                src={row}
-                                                alt={`preview-image-${i}`}
+                                                src={ImageParser(row)}
+                                                alt={ImageParser('placeholder')}
                                             />
                                         </Flex>
                                     ))}
@@ -328,7 +361,7 @@ const CreateProduct: React.FC = () => {
                             ref={fileInput}
                             display="none"
                             type="file"
-                            onChange={handleInputChange}
+                            onInput={handleInputChange}
                         />
                     </Flex>
                 </FormControl>

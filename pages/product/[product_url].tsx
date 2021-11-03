@@ -4,6 +4,7 @@ import { ProductsDocument } from '../../src/models/products'
 
 // Logic
 import core from '../../src/logic/core'
+import { usePulse } from '@pulsejs/react'
 
 // Routing
 import { useRouter } from 'next/router'
@@ -52,6 +53,8 @@ import cart from '../../src/services/cart'
 const ProductPage: React.FC = () => {
     const InfoHandler = useInfoHandler()
     const ErrorHandler = useErrorHandler()
+
+    const wrapperSize = usePulse(core.state.wrapperSize)
 
     const router = useRouter()
     const { product_url } = router.query
@@ -106,150 +109,191 @@ const ProductPage: React.FC = () => {
 
     if (!data) return <Loader />
 
-    return (
-        <Public>
-            <Grid
-                gridTemplateColumns="2fr 1fr"
-                h="calc(100vh - 81px)"
-                pos="relative"
-            >
+    if (data !== null && data.image) {
+        return (
+            <Public>
                 <Grid
-                    templateRows="3.5fr 1fr"
-                    backgroundColor={
-                        colorMode === 'dark' ? 'gray.700' : '#eef1f7'
-                    }
+                    gridTemplateColumns="2fr 1fr"
+                    h="calc(100vh - 80px)"
+                    pos="relative"
+                    className="product-page"
                 >
-                    <Flex
-                        justify="center"
-                        align="center"
-                        backgroundImage={ImageParser(data.image[imageIndex])}
-                        backgroundPosition="center"
-                        backgroundSize="contain"
-                        backgroundRepeat="no-repeat"
+                    <Grid
+                        h="100%"
+                        pb="2"
+                        templateRows="3.5fr 1fr"
+                        backgroundColor={
+                            colorMode === 'dark' ? 'gray.700' : '#eef1f7'
+                        }
                     >
                         <Flex
-                            justify="space-between"
-                            w="100%"
-                            mx="48px"
-                            fontSize="3xl"
+                            justify="center"
+                            align="center"
+                            backgroundImage={ImageParser(
+                                data.image[imageIndex]
+                            )}
+                            backgroundPosition="center"
+                            backgroundSize="contain"
+                            backgroundRepeat="no-repeat"
                         >
-                            <Icon
-                                as={CaretLeft}
-                                fontSize="6xl"
-                                cursor="pointer"
-                                onClick={() => handleImageChange('prev')}
-                            />
-                            <Icon
-                                as={CaretRight}
-                                fontSize="6xl"
-                                cursor="pointer"
-                                onClick={() => handleImageChange('next')}
-                            />
-                        </Flex>
-                        <Box pos="absolute" left="50" top="50">
-                            <Heading size="2xl">{data.name}</Heading>
-                            <Text mt="4" fontSize="3xl">
-                                {data.price}€
-                            </Text>
-                        </Box>
-                    </Flex>
-                    <Flex justify="center" h="100%">
-                        {data.image.map((row, i: number) => {
-                            return (
-                                <Box
-                                    key={i}
-                                    w="100px"
-                                    h="100px"
-                                    mx="12px"
-                                    transition=".25s"
+                            <Flex
+                                justify="space-between"
+                                w="100%"
+                                mx={
+                                    wrapperSize === '90%'
+                                        ? '1'
+                                        : wrapperSize === '2xl'
+                                        ? '4'
+                                        : '48px'
+                                }
+                                fontSize="3xl"
+                            >
+                                <Icon
+                                    as={CaretLeft}
+                                    fontSize="6xl"
                                     cursor="pointer"
-                                    style={{
-                                        filter:
-                                            imageIndex === i
-                                                ? 'grayscale(0%)'
-                                                : 'grayscale(100%)',
-                                        borderBottom:
-                                            imageIndex === i
-                                                ? '2px solid #3182ce'
-                                                : '2px solid #b1b5b9'
-                                    }}
-                                    onClick={() => setImageIndex(i)}
+                                    onClick={() => handleImageChange('prev')}
+                                />
+                                <Icon
+                                    as={CaretRight}
+                                    fontSize="6xl"
+                                    cursor="pointer"
+                                    onClick={() => handleImageChange('next')}
+                                />
+                            </Flex>
+                            <Box
+                                pos="absolute"
+                                left={wrapperSize === '90%' ? '4' : '50'}
+                                top={wrapperSize === '90%' ? '4' : '50'}
+                            >
+                                <Heading
+                                    fontSize={
+                                        wrapperSize === '90%' ? '2xl' : '4xl'
+                                    }
                                 >
-                                    <Image
-                                        src={ImageParser(row)}
-                                        alt={row}
-                                        fallbackSrc="/api/image/placeholder"
-                                    />
-                                </Box>
-                            )
-                        })}
+                                    {data.name}
+                                </Heading>
+                                <Text
+                                    mt={wrapperSize === '90%' ? '1' : '2'}
+                                    fontSize={
+                                        wrapperSize === '90%' ? 'xl' : '4xl'
+                                    }
+                                >
+                                    {data.price}€
+                                </Text>
+                            </Box>
+                        </Flex>
+
+                        <Flex justify="center" h="100%">
+                            {data.image.map((row, i: number) => {
+                                return (
+                                    <Box
+                                        key={i}
+                                        w="100px"
+                                        h="100px"
+                                        mx="12px"
+                                        transition=".25s"
+                                        cursor="pointer"
+                                        style={{
+                                            filter:
+                                                imageIndex === i
+                                                    ? 'grayscale(0%)'
+                                                    : 'grayscale(100%)',
+                                            borderBottom:
+                                                imageIndex === i
+                                                    ? '2px solid #3182ce'
+                                                    : '2px solid #b1b5b9'
+                                        }}
+                                        onClick={() => setImageIndex(i)}
+                                    >
+                                        <Image
+                                            src={ImageParser(row)}
+                                            alt={row}
+                                            fallbackSrc={ImageParser(
+                                                'placeholder'
+                                            )}
+                                        />
+                                    </Box>
+                                )
+                            })}
+                        </Flex>
+                    </Grid>
+
+                    <Flex
+                        h="100%"
+                        borderLeft="1px solid rgba(100, 100, 100, 0.25)"
+                        py="12"
+                        direction="column"
+                    >
+                        <Accordion defaultIndex={[0]} allowMultiple>
+                            {data.fields.map((row: ProductField) => {
+                                if (row.type === 'text')
+                                    return (
+                                        <AccordionItem
+                                            px="12"
+                                            key={row.textTitle}
+                                        >
+                                            <h2>
+                                                <AccordionButton>
+                                                    <Box
+                                                        flex="1"
+                                                        textAlign="left"
+                                                    >
+                                                        {row.textTitle}
+                                                    </Box>
+                                                    <AccordionIcon />
+                                                </AccordionButton>
+                                            </h2>
+
+                                            <AccordionPanel pb="4">
+                                                {row.textValue}
+                                            </AccordionPanel>
+                                        </AccordionItem>
+                                    )
+                            })}
+                        </Accordion>
+
+                        <HStack
+                            mt="auto"
+                            px={wrapperSize === '90%' ? '2' : '12'}
+                        >
+                            <NumberInput
+                                w="125px"
+                                min={1}
+                                max={99}
+                                value={qty}
+                                onChange={(ev) => setQty(Number(ev))}
+                            >
+                                <NumberInputField />
+                                <NumberInputStepper>
+                                    <NumberIncrementStepper />
+                                    <NumberDecrementStepper />
+                                </NumberInputStepper>
+                            </NumberInput>
+
+                            <Button
+                                isFullWidth
+                                ml="4"
+                                colorScheme="primary"
+                                onClick={handleAddToCart}
+                            >
+                                Add to cart
+                            </Button>
+
+                            <Button
+                                variant="outline"
+                                ml="4"
+                                colorScheme="primary"
+                                // onClick={handleAddToWishlist}
+                            >
+                                <Icon as={HeartStraight} weight="fill" />
+                            </Button>
+                        </HStack>
                     </Flex>
                 </Grid>
-
-                <Flex
-                    borderLeft="1px solid rgba(100, 100, 100, 0.25)"
-                    py="12"
-                    direction="column"
-                >
-                    <Accordion defaultIndex={[0]} allowMultiple>
-                        {data.fields.map((row: ProductField) => {
-                            if (row.type === 'text')
-                                return (
-                                    <AccordionItem px="12" key={row.textTitle}>
-                                        <h2>
-                                            <AccordionButton>
-                                                <Box flex="1" textAlign="left">
-                                                    {row.textTitle}
-                                                </Box>
-                                                <AccordionIcon />
-                                            </AccordionButton>
-                                        </h2>
-
-                                        <AccordionPanel pb="4">
-                                            {row.textValue}
-                                        </AccordionPanel>
-                                    </AccordionItem>
-                                )
-                        })}
-                    </Accordion>
-
-                    <HStack mt="auto" px="12">
-                        <NumberInput
-                            w="20%"
-                            min={1}
-                            max={99}
-                            value={qty}
-                            onChange={(ev) => setQty(Number(ev))}
-                        >
-                            <NumberInputField />
-                            <NumberInputStepper>
-                                <NumberIncrementStepper />
-                                <NumberDecrementStepper />
-                            </NumberInputStepper>
-                        </NumberInput>
-
-                        <Button
-                            isFullWidth
-                            ml="4"
-                            colorScheme="primary"
-                            onClick={handleAddToCart}
-                        >
-                            Add to cart
-                        </Button>
-
-                        <Button
-                            variant="outline"
-                            ml="4"
-                            colorScheme="primary"
-                            // onClick={handleAddToWishlist}
-                        >
-                            <Icon as={HeartStraight} weight="fill" />
-                        </Button>
-                    </HStack>
-                </Flex>
-            </Grid>
-        </Public>
-    )
+            </Public>
+        )
+    } else return <Loader />
 }
 
 export default ProductPage

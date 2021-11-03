@@ -1,21 +1,22 @@
+import nc from 'next-connect'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 // Utils
-import fs from 'fs'
+import fse from 'fs-extra'
 
-const handler = (req: NextApiRequest, res: NextApiResponse) => {
+const handler = nc<NextApiRequest, NextApiResponse>().get((req, res) => {
     const { image_name } = req.query
 
-    const file = process.cwd() + '/pages/api/image/' + image_name + '.png'
-    const stat = fs.statSync(file)
+    const file = process.cwd() + '/public/images/' + image_name
+    const stat = fse.statSync(file)
 
     res.writeHead(200, {
         'Content-Type': 'image/png',
         'Content-Length': stat.size
     })
 
-    const stream = fs.createReadStream(file)
+    const stream = fse.createReadStream(file)
     stream.pipe(res)
-}
+})
 
 export default handler

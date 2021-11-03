@@ -85,7 +85,7 @@ const Navbar: React.FC = () => {
             <Box
                 pos="sticky"
                 top="0"
-                zIndex="998"
+                zIndex="1000"
                 as="nav"
                 borderBottom="1px solid rgba(100, 100, 100, 0.25)"
                 backgroundColor={colorMode === 'dark' ? 'gray.800' : 'white'}

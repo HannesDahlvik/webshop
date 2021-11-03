@@ -46,7 +46,7 @@ const ProductCard: React.FC<ProductsDocument> = (props) => {
                         fit="cover"
                         src={ImageParser(props.image[0])}
                         alt={props.name}
-                        fallbackSrc="/api/image/placeholder"
+                        fallbackSrc={ImageParser('placeholder')}
                     />
                 </Link>
             </Box>

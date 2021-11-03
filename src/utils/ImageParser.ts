@@ -1,6 +1,6 @@
 const ImageParser = (imgName: string): string => {
-    if (imgName) return `/api/image/${imgName}`
-    else return '/api/image/placeholder'
+    if (imgName) return `/images/${imgName}.png`
+    else return '/images/placeholder.png'
 }
 
 export default ImageParser
