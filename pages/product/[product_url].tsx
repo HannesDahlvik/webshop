@@ -222,7 +222,7 @@ const ProductPage: React.FC = () => {
                     <Flex
                         h="100%"
                         borderLeft="1px solid rgba(100, 100, 100, 0.25)"
-                        py="12"
+                        py={wrapperSize === '90%' ? '0' : '12'}
                         direction="column"
                     >
                         <Accordion defaultIndex={[0]} allowMultiple>
@@ -256,6 +256,7 @@ const ProductPage: React.FC = () => {
                         <HStack
                             mt="auto"
                             px={wrapperSize === '90%' ? '2' : '12'}
+                            pb={wrapperSize === '90%' ? '6' : '0'}
                         >
                             <NumberInput
                                 w="125px"

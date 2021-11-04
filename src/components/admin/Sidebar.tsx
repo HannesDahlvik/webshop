@@ -9,7 +9,7 @@ import Link from 'next/link'
 
 // UI
 import { Box, Text, Flex, Avatar, Icon } from '@chakra-ui/react'
-import { ArrowFatLeft, House, Plus } from 'phosphor-react'
+import { ArrowFatLeft, House, List, Plus } from 'phosphor-react'
 
 const links = [
     {
@@ -21,6 +21,11 @@ const links = [
         title: 'Create',
         path: 'create',
         icon: Plus
+    },
+    {
+        title: 'Products',
+        path: 'list',
+        icon: List
     }
 ]
 
@@ -51,33 +56,34 @@ const AdminSidebar: React.FC = () => {
             </Flex>
 
             <Flex direction="column" px="8">
-                {links.map((row, i: number) => {
-                    return (
-                        <Link href={`/admin/${row.path}`} passHref key={i}>
-                            <Flex
-                                align="center"
-                                p="4"
-                                px="8"
-                                mb="6"
-                                transition=".3s"
-                                borderRadius="lg"
-                                cursor="pointer"
-                                backgroundColor={
-                                    `/admin/${row.path}` === location.pathname
-                                        ? 'blue.500'
-                                        : ''
-                                }
-                            >
-                                <Icon
-                                    fontSize="2xl"
-                                    as={row.icon}
-                                    weight="fill"
-                                />
-                                <Text ml="2">{row.title}</Text>
-                            </Flex>
-                        </Link>
-                    )
-                })}
+                {links.map((row, i: number) => (
+                    <Link href={`/admin/${row.path}`} passHref key={i}>
+                        <Flex
+                            align="center"
+                            p="4"
+                            px="8"
+                            mb="6"
+                            transition=".3s"
+                            borderRadius="lg"
+                            cursor="pointer"
+                            backgroundColor={
+                                `/admin/${row.path}` === location.pathname
+                                    ? 'blue.500'
+                                    : ''
+                            }
+                            _hover={{
+                                backgroundColor: location.pathname.includes(
+                                    row.path
+                                )
+                                    ? ''
+                                    : 'blue.50'
+                            }}
+                        >
+                            <Icon fontSize="2xl" as={row.icon} weight="fill" />
+                            <Text ml="2">{row.title}</Text>
+                        </Flex>
+                    </Link>
+                ))}
             </Flex>
 
             <Link href="/" passHref>

@@ -7,7 +7,7 @@ const token = state('')
 const cart = state<Cart[]>([])
 const wishlist = state<string[]>([])
 
-const wrapperSize = state('7xl')
+const wrapperSize = state<'7xl' | '4xl' | '2xl' | '90%'>('7xl')
 
 const searchValue = state('')
 
