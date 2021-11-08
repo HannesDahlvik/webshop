@@ -6,7 +6,7 @@ import Products from '../../../src/models/products'
 
 // Utils
 import logger from '../../../src/utils/logger'
-import dbConnect from '../../../src/middleware/database'
+import dbConnect from '../../../src/utils/database'
 
 dbConnect()
 

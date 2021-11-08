@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import User from '../../../src/models/user'
 
 // Utils
-import dbConnect from '../../../src/middleware/database'
+import dbConnect from '../../../src/utils/database'
 import config from '../../../src/config/config'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'

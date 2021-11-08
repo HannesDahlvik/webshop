@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import User from '../../../src/models/user'
 
 // Utils
-import dbConnect from '../../../src/middleware/database'
+import dbConnect from '../../../src/utils/database'
 import logger from '../../../src/utils/logger'
 
 dbConnect()

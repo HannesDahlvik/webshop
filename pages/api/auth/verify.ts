@@ -6,7 +6,7 @@ import User from '../../../src/models/user'
 import { UserDoc } from '../../../src/models/user'
 
 // Utils
-import dbConnect from '../../../src/middleware/database'
+import dbConnect from '../../../src/utils/database'
 import config from '../../../src/config/config'
 import jwt from 'jsonwebtoken'
 

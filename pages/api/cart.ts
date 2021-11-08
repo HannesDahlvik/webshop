@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import Products from '../../src/models/products'
 
 // Utils
-import dbConnect from '../../src/middleware/database'
+import dbConnect from '../../src/utils/database'
 
 dbConnect()
 
