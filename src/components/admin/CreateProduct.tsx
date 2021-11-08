@@ -26,9 +26,9 @@ import {
     EditableInput,
     EditablePreview,
     Tag,
-    TagLabel,
-    Image
+    TagLabel
 } from '@chakra-ui/react'
+import Image from 'next/image'
 import { Plus, Question, Trash } from 'phosphor-react'
 
 // Utils
@@ -62,8 +62,6 @@ const CreateProduct: React.FC = () => {
 
     const [disabled, setDisabled] = useState(true)
 
-    console.log(files)
-
     useEffect(() => {
         if (
             name.length > 2 &&
@@ -94,8 +92,6 @@ const CreateProduct: React.FC = () => {
             'Content-Type': 'multipart/form-data'
         }).then((res) => {
             const data = res.data
-            console.log(data)
-
             if (data.success) {
                 InfoHandler(data.message)
 
@@ -139,7 +135,7 @@ const CreateProduct: React.FC = () => {
     }
 
     const handleSubmit = () => {
-        fetcher('/api/product/create-product', 'POST', {
+        fetcher('/api/product/create', 'POST', {
             name,
             description: desc,
             price,
@@ -338,6 +334,7 @@ const CreateProduct: React.FC = () => {
                                                 top="10px"
                                                 right="10px"
                                                 fontSize="xl"
+                                                zIndex="999"
                                                 cursor="pointer"
                                                 onClick={() =>
                                                     handleRemoveImage(i, row)
@@ -345,10 +342,11 @@ const CreateProduct: React.FC = () => {
                                             />
 
                                             <Image
-                                                borderRadius="md"
-                                                objectFit="cover"
                                                 src={ImageParser(row)}
-                                                alt={ImageParser('placeholder')}
+                                                alt="placeholder"
+                                                width="250px"
+                                                height="250px"
+                                                objectFit="cover"
                                             />
                                         </Flex>
                                     ))}
@@ -361,7 +359,7 @@ const CreateProduct: React.FC = () => {
                             ref={fileInput}
                             display="none"
                             type="file"
-                            onInput={handleInputChange}
+                            onChange={handleInputChange}
                         />
                     </Flex>
                 </FormControl>

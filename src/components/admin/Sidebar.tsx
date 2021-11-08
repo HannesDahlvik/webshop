@@ -24,7 +24,7 @@ const links = [
     },
     {
         title: 'Products',
-        path: 'list',
+        path: 'products',
         icon: List
     }
 ]

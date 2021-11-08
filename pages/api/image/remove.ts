@@ -9,6 +9,8 @@ import logger from '../../../src/utils/logger'
 const handler = nc<NextApiRequest, NextApiResponse>().post((req, res) => {
     const images = req.body.files
 
+    console.log(images)
+
     images.map((row) => {
         const filePath = path.resolve(`./public/images/${row}`)
 
