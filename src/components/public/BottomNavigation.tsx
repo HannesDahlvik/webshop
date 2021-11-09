@@ -24,11 +24,15 @@ import {
     ShoppingCart,
     UserCircle,
     HeartStraight,
-    Sun,
-    Moon
+    MagnifyingGlass
 } from 'phosphor-react'
 
 const links: BottomNavLinks[] = [
+    {
+        title: 'Search',
+        path: '/search',
+        icon: MagnifyingGlass
+    },
     {
         title: 'Account',
         path: '/account/details',
@@ -72,12 +76,6 @@ const BottomNavigation: NextPage = () => {
             borderTopColor="rgba(100, 100, 100, 0.25)"
             zIndex="1000"
         >
-            <NavItem
-                title="Theme"
-                icon={colorMode === 'dark' ? Sun : Moon}
-                onClick={toggleColorMode}
-            />
-
             {links.map((row, i: number) => {
                 const selected = router.pathname === row.path
                 return (

@@ -12,7 +12,16 @@ import { useRouter } from 'next/router'
 import Public from '../../src/layouts/Public'
 
 // UI
-import { Box, Grid, Heading } from '@chakra-ui/react'
+import {
+    Box,
+    Grid,
+    Heading,
+    InputGroup,
+    Input,
+    InputRightElement,
+    Icon
+} from '@chakra-ui/react'
+import { MagnifyingGlass } from 'phosphor-react'
 
 // Components
 import ProductCard from '../../src/components/public/ProductCard'
@@ -26,6 +35,7 @@ const Search: React.FC = () => {
     const ErrorHandler = useErrorHandler()
 
     const wrapperSize = usePulse(core.state.wrapperSize)
+    const searchValue = usePulse(core.state.searchValue)
 
     const router = useRouter()
     const { search_value } = router.query
@@ -40,18 +50,64 @@ const Search: React.FC = () => {
     const handleSearch = () => {
         fetcher(`/api/search/${search_value}`, 'GET')
             .then((res) => {
-                const data = res.data
-
-                if (data.length === 0) setNoProducts(true)
-                else setNoProducts(false)
-                setData(data)
+                handleResponse(res)
             })
             .catch((err) => ErrorHandler(err.message))
     }
 
+    const handleNewSearch = (ev: React.FormEvent) => {
+        ev.preventDefault()
+
+        fetcher(`/api/search/${searchValue}`, 'GET')
+            .then((res) => {
+                handleResponse(res)
+            })
+            .catch((err) => ErrorHandler(err.message))
+    }
+
+    const handleResponse = (res: any) => {
+        const data = res.data
+
+        if (data.length === 0) setNoProducts(true)
+        else setNoProducts(false)
+        setData(data)
+    }
+
     return (
         <Public>
-            <Box w={wrapperSize} m="50px auto">
+            {wrapperSize === '90%' ? (
+                <Box p="6">
+                    <form onSubmit={(ev) => handleNewSearch(ev)}>
+                        <InputGroup>
+                            <Input
+                                placeholder="Search"
+                                value={searchValue}
+                                onChange={(ev) =>
+                                    core.state.searchValue.set(ev.target.value)
+                                }
+                            />
+                            <InputRightElement>
+                                <Icon
+                                    as={MagnifyingGlass}
+                                    weight="bold"
+                                    fontSize="2xl"
+                                    cursor="pointer"
+                                    zIndex="999"
+                                    onClick={handleSearch}
+                                />
+                            </InputRightElement>
+                        </InputGroup>
+                    </form>
+                </Box>
+            ) : (
+                <></>
+            )}
+
+            <Box
+                w={wrapperSize}
+                m="0 auto"
+                mt={wrapperSize !== '90%' ? '50px' : ''}
+            >
                 {!noProducts ? (
                     <>
                         <Heading>Search result for: {search_value}</Heading>

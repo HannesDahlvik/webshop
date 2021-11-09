@@ -11,7 +11,16 @@ import { useRouter } from 'next/router'
 import Public from '../../src/layouts/Public'
 
 // UI
-import { Flex, Heading, Input, Box } from '@chakra-ui/react'
+import {
+    Flex,
+    Heading,
+    InputGroup,
+    Input,
+    InputRightElement,
+    Icon,
+    Box
+} from '@chakra-ui/react'
+import { MagnifyingGlass } from 'phosphor-react'
 
 // Utils
 import useInfoHandler from '../../src/utils/useInfoHandler'
@@ -45,15 +54,28 @@ const SearchIndex: React.FC = () => {
                 </Heading>
 
                 <Box as="form" textAlign="center" onSubmit={handleSearch}>
-                    <Input
-                        placeholder="Search"
+                    <InputGroup
                         w={wrapperSize === '90%' ? '90%' : '50%'}
                         m="0 auto"
-                        value={searchValue}
-                        onChange={(ev) =>
-                            core.state.searchValue.set(ev.target.value)
-                        }
-                    />
+                    >
+                        <Input
+                            placeholder="Search"
+                            value={searchValue}
+                            onChange={(ev) =>
+                                core.state.searchValue.set(ev.target.value)
+                            }
+                        />
+                        <InputRightElement>
+                            <Icon
+                                as={MagnifyingGlass}
+                                weight="bold"
+                                fontSize="2xl"
+                                cursor="pointer"
+                                zIndex="999"
+                                onClick={handleSearch}
+                            />
+                        </InputRightElement>
+                    </InputGroup>
                 </Box>
             </Flex>
         </Public>
